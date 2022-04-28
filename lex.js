@@ -19,8 +19,8 @@ const errors = {
 };
 
 const patterns = [
-	[ /true/,  tokens.BOOL_TRUE  ],
-	[ /false/, tokens.BOOL_FALSE ],
+	[ /^true/,  tokens.BOOL_TRUE  ],
+	[ /^false/, tokens.BOOL_FALSE ],
 	[ /^[_a-z][a-zA-Z0-9]+/, tokens.ID ],
 	[ /^\s+/, tokens.WHITESPACE ],
 ];
@@ -67,15 +67,12 @@ function lex(input) {
 			break;
 		}
 
-		if (errors[m] === m) {
+		if (error = errors.hasOwnProperty(m)) {
 			console.log("Error: ", m, "(@'" + input.substr(0,20) + "...')");
-			error = true;
 			break;
 		}
 
 		i += m.value.length;
-		// console.log(i);
-		// input = input.substr(m.value.length);
 
 		if (m.which === tokens.WHITESPACE) {
 			continue;
@@ -90,5 +87,4 @@ function lex(input) {
 var s = Array(100000).join('false falseyness  true ');
 
 var parse_result = lex(s);
-// console.log(parse_result);
-
+console.log(parse_result);
